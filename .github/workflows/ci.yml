@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read   # least privilege for GITHUB_TOKEN
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Dependency audit (fail on high/critical)
+        run: npm audit --audit-level=high
+      - name: Unit + security tests
+        run: npm test
+        env:
+          NODE_ENV: test
+          # tests never need real secrets; a throwaway value is generated per run
+          SESSION_SECRET: ${{ github.run_id }}-ci-only-session-secret-value
+
+  deploy:
+    # Only main, only after tests pass, only through the protected "production" environment
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: test
+    runs-on: ubuntu-latest
+    environment: production   # required reviewers + environment-scoped secrets
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check required secrets exist (values are masked in logs)
+        env:
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          GITHUB_CLIENT_ID: ${{ secrets.OAUTH_GITHUB_CLIENT_ID }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.OAUTH_GITHUB_CLIENT_SECRET }}
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          for v in SESSION_SECRET GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET DEPLOY_TOKEN; do
+            if [ -z "${!v}" ]; then echo "::error::missing secret $v"; exit 1; fi
+          done
+          echo "all production secrets present"
+      - name: Deploy
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          echo "Deploy step placeholder - e.g. 'railway up' or 'render deploy' using \$DEPLOY_TOKEN."
+          echo "Runtime secrets are set as env vars on the hosting platform, not baked into the image."
