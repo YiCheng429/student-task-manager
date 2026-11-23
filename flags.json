@@ -1,0 +1,4 @@
+{
+  "dark_mode": { "enabled": true, "rollout": 100, "description": "Dark colour theme for the task list" },
+  "priority_labels": { "enabled": false, "rollout": 0, "description": "High / Medium / Low priority badges on tasks" }
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Task Manager</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Student Task Manager</h1>
+    <div id="who"></div>
+  </header>
+
+  <main>
+    <section id="login-box" class="card" hidden>
+      <p>Sign in to see your tasks.</p>
+      <a class="btn" href="/auth/github">Sign in with GitHub</a>
+      <form id="dev-login" class="dev" hidden>
+        <p class="muted">Local demo login (DEV_LOGIN=1, never in production)</p>
+        <input name="githubId" placeholder="numeric GitHub id" required pattern="\d+">
+        <input name="login" placeholder="display name" pattern="[A-Za-z0-9][A-Za-z0-9-]{0,38}" title="letters, digits and hyphens, like a GitHub username">
+        <button class="btn secondary">Dev login</button>
+      </form>
+    </section>
+
+    <section id="app" hidden>
+      <form id="new-task" class="card row">
+        <input name="title" placeholder="New task, e.g. Finish A10 report" maxlength="200" required>
+        <select name="priority" id="priority-select" hidden>
+          <option value="">No priority</option>
+          <option>High</option><option>Medium</option><option>Low</option>
+        </select>
+        <button class="btn">Add</button>
+      </form>
+      <ul id="tasks" class="card list"></ul>
+
+      <section id="admin" class="card" hidden>
+        <h2>Feature flags (admin)</h2>
+        <div id="flag-rows"></div>
+      </section>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

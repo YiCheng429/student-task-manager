@@ -1,0 +1,29 @@
+:root { --bg:#f6f7fb; --card:#fff; --text:#1d2330; --muted:#6b7280; --line:#e5e7eb; --accent:#2563eb; }
+body.theme-dark { --bg:#0f172a; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --line:#334155; --accent:#60a5fa; }
+* { box-sizing:border-box; }
+body { margin:0; font:16px/1.5 system-ui, sans-serif; background:var(--bg); color:var(--text); transition:background .2s,color .2s; }
+.top { display:flex; justify-content:space-between; align-items:center; padding:16px 24px; border-bottom:1px solid var(--line); }
+.top h1 { font-size:1.25rem; margin:0; }
+main { max-width:760px; margin:24px auto; padding:0 16px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px; }
+.row { display:flex; gap:8px; }
+.row input { flex:1; }
+input, select { padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--text); font:inherit; }
+.btn { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:8px 14px; font:inherit; cursor:pointer; text-decoration:none; display:inline-block; }
+.btn.secondary { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+.list { list-style:none; padding:0; }
+.list li { display:flex; align-items:center; gap:10px; padding:10px 16px; border-bottom:1px solid var(--line); }
+.list li:last-child { border-bottom:0; }
+.list li.done span.title { text-decoration:line-through; color:var(--muted); }
+.list li .grow { flex:1; }
+.badge { font-size:.75rem; font-weight:600; padding:2px 8px; border-radius:999px; }
+.badge.High { background:#fee2e2; color:#b91c1c; }
+.badge.Medium { background:#fef3c7; color:#92400e; }
+.badge.Low { background:#dcfce7; color:#166534; }
+.muted { color:var(--muted); font-size:.9rem; }
+.dev { margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
+.dev p { width:100%; margin:0; }
+.flag { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--line); }
+.icon { background:none; border:0; color:var(--muted); cursor:pointer; font-size:1rem; }
+.pct { width:70px; }
+.card h2 { margin:0 0 8px; font-size:1.1rem; }
